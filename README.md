@@ -4,7 +4,7 @@ An AI hub for astronomy and astrophysics. The platform, based on PCL Cloud Brain
 AstroHub, developed based on PCL Cloud Brain, mainly includes three modules, publish, search, and run. The Publish module accesses the remote computing node through the SSH command to complete the upload process of model and data pipeline. It then saves the corresponding information into JSON. The Search module can filter name, owner, domain to obtain the corresponding model/data list by parsing the JSON on the storage node. The Run module is based on the Kubernetes and Docker framework, allowing remote computing nodes to distributed execute the selected model and dataset.
 
 
-<img src="/Images/model_architecture.jpg" width="1100" height="600"/><br/>
+<img src="/Images/model_architecture.jpg" width="1100" height="650"/><br/>
 ## Installation
 ### Environment
 AstroHub operating environment is composed of Master node and Slave nodes. The physical machine requires to be configured with Kubernetes and Docker environment. Configuration instruction refers to [Kubernetes](https://kubernetes.io/docs/setup/), [Docker](https://docs.docker.com/get-started/overview/).
