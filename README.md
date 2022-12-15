@@ -1,117 +1,63 @@
-# AstroHub
-An AI hub for astronomy and astrophysics. The platform, based on PCL Cloud Brain, provides a remote library for the pre-training model and dataset. It lets users complete the retraining and inference processes by executing a simple API locally.
-## Structure
-AstroHub, developed based on PCL Cloud Brain, mainly includes three modules, publish, search, and run. The Publish module accesses the remote computing node through the SSH command to complete the upload process of model and data pipeline. It then saves the corresponding information into JSON. The Search module can filter name, owner, domain to obtain the corresponding model/data list by parsing the JSON on the storage node. The Run module is based on the Kubernetes and Docker framework, allowing remote computing nodes to distributed execute the selected model and dataset.
+# TCM prescription generation
+Traditional Chinese medicine (TCM) prescription generation with graph AI model
+## Introduction
 
+This repository contains the model part of our paper, which includes the graph embedding layer and herb recommendation layer. Among them,  Node2Vec is used to capture the latent features of each herb from the  herb-ingredient-target network.  The Herb Recommendation layer consists of the MLP structure that fit the embedding of each TCM formula to an exact score to assess the quality.
 
 <img src="/Images/model_architecture.jpg" width="1100" height="650"/><br/>
+
 ## Installation
-### Environment
-AstroHub operating environment is composed of Master node and Slave nodes. The physical machine requires to be configured with Kubernetes and Docker environment. Configuration instruction refers to [Kubernetes](https://kubernetes.io/docs/setup/), [Docker](https://docs.docker.com/get-started/overview/).
-## Example Usage
-
-The following sections are short introductions to using the AstroHub.
-
-### Discovering and Running Models
-Users interact with AstroHub by submitting requests to a REST API. 
-In an effort to make using this API simple, the AstroHub contains a client that provides a Python API to these requests and hides the tedious operations.
-
-To create the client, call
-
-```python
-from AstroHub.client import AstroHubClient
-
-client = AstroHubClient('PCL_usrname','PCL_password')
-```
-
-#### Search the Model/Dataset
-The client makes it simple to search models and dataset within AstroLibrary. 
-For example, you can get all of the models on AstroHub by 
-
-```python
-res = client.search_all_model()
-```
-
-That function will return a Pandas DataFrame of models, which looks like:
-
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>uuid</th>
-      <th>name</th>
-      <th>owner</th>
-      <th>description</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>356e8916-415b-11ec-972a-8c8590c0b3f0</td>
-      <td>mnist_example</td>
-      <td>rm</td>
-      <td>An example for MNIST with NN</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>945360f7-d24f-4586-8835-218132734d34</td>
-      <td>mnist</td>
-      <td>rm</td>
-      <td>MLP archieving 97.45% on the MNIST test data</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>d400a239-c252-4fec-bf17-a9ded50729ba</td>
-      <td>test</td>
-      <td>rm</td>
-      <td>To find out if the function works</td>
-    </tr>
-  </tbody>
-</table>
-
-#### Run Models
-
-Once you get the uuid of the model and dataset, it can be run through the client. If the user requires distributed execution, 
-nodename and the amount of CPU, GPU can be passed as optional parameters to the run function.
-
-```python
-res = client.run(model_id,data_id,cpu,gpu,nodeName)
-```
-### Describing a Model/Dataset
-
-To publish a model or dataset to the remote library requires to generate a JSON describing the metadata of the model/dataset
-
-#### Describe the Model
-By running describe function, we can simply provide much less metadata about the model to generate a json file
-```python
-from AstroHub.config.metaData import AstroHubMetaData
-
-# Read in model from disk
-AstroHubInfo = AstroHubMetaData()
-
-# Define the name and title for the model
-AstroHubInfo.set_title("A short title for the model")
-AstroHubInfo.set_name("AstroHub")
-AstroHubInfo.set_publication_date()
-```
-#### Describe the Dataset
-Similar to describe model
-```python
-from AstroHub.config.dataset import BaseDataset
-
-# Read in model from disk
-dataset = BaseDataset()
-
-# Define the basic info for the dataset
-dataset.set_title("A short title for the dataset")
-dataset.set_name("AstroHub")
-dataset.set_owner("owner")
-dataset.set_publication_date()
-dataset.set_version("version")
-dataset.set_type()
+The graph model is implemented based on [PYG](https://github.com/pyg-team/pytorch_geometric) , which requires the pytorch version >= 1.12.0. More information about PYG installation can be found [here](https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html). The installation command as follows.
 
 ```
+pip install torch==1.13.0+cu11x --extra-index-url https://download.pytorch.org/whl/cu11x
+pip install pyg-lib torch-scatter torch-sparse torch-cluster torch-spline-conv torch-geometric -f https://data.pyg.org/whl/torch-1.12.0+cu11x.html
+```
+
+## Data preparation
+
+The graph data is constructed with Node.csv and Edge.csv
+| Node_id |                      Nodes                      | Label |
+| :-----: | :---------------------------------------------: | :---: |
+|    0    | 4-aminobutyrate aminotransferase, mitochondrial |   2   |
+|    1    |              sophoraisoflavanone,a              |   1   |
+|    2    |           Euphorbiae Humifusae Herba            |   0   |
+
+| source_Node_id | target_Node_id |
+| :------------: | :------------: |
+|      697       |      2031      |
+|      7145      |      741       |
+|      1426      |      5967      |
+
+The training data for the Rocommender is as follows, which is generated based on the real TCM prescription
+
+|                          Compounds                           | Score |
+| :----------------------------------------------------------: | :---: |
+| Crotonis Fructus, Arecae Semen, Aucklandiae Radix, Citri Reticulatae Pericarpium Viride, Olibanun | 0.29  |
+| Arum Ternatum Thunb., Magnolia Officinalis Rehd Et Wils, Coptidis Rhizoma, Phragmitis Rhizomam, Acoritataninowii Rhizoma, Gardeniae Fructus | 0.86  |
+| Arum Ternatum Thunb., Clematidis Armandii Caulis, Aconiti Lateralis Radix Praeparata | 0.75  |
+| Folium Artemisiae Argyi, Phellodendri Chinrnsis Cortex, Zingiber Officinale Roscoe |  0.6  |
+| Aconitum Kusnezoffii Reichb, licorice, Zingiberis Rhizoma, Magnolia Officinalis Rehd Et Wils |   1   |
+|    Scutellariae Radix, Curcumae Radix, Gardeniae Fructus     | 0.38  |
+
+## Results
+
+We inferred all potential prescriptions for the specific disease with our model.  The top-10 formulas are displayed in the following table, which are selected for the biological experiment.
+
+|                         TCM Formulas                         | Score  |
+| :----------------------------------------------------------: | :----: |
+| Euphorbiae Humifusae Herba,Scutellariae Radix,Polyporus Umbellatus(Pers)Fr.,Paeoniae Radix Alba | 0.9968 |
+| Hedysarum Multijugum Maxim.,Euphorbiae Humifusae Herba,Polyporus Umbellatus(Pers)Fr.,Paeoniae Radix Alba | 0.9966 |
+| Fraxini Cortex,Mori Follum,Scutellariae Radix,Paeoniae Radix Alba | 0.9966 |
+| Euphorbiae Humifusae Herba,Polyporus Umbellatus(Pers)Fr.,Fructussophorae,Paeoniae Radix Alba | 0.9964 |
+| Fraxini Cortex,Euphorbiae Humifusae Herba,Polyporus Umbellatus(Pers)Fr.,Paeoniae Radix Alba | 0.9962 |
+|        Fraxini Cortex,Mori Follum,Paeoniae Radix Alba        | 0.9961 |
+| Bistortae Rhizoma,Euphorbiae Humifusae Herba,Kochiae Fructus,Paeoniae Radix Alba | 0.996  |
+| Euphorbiae Humifusae Herba,Portulacae Herba,Polyporus Umbellatus(Pers)Fr.,Paeoniae Radix Alba | 0.9959 |
+| Fraxini Cortex,Scutellariae Radix,Evodiae Fructus,Paeoniae Radix Alba | 0.9956 |
+|    Fraxini Cortex,Scutellariae Radix,Paeoniae Radix Alba     | 0.9954 |
 
 ## Project Support
+
 This material is based upon work supported by PengCheng Lab.
 
