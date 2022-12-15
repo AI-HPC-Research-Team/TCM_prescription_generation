@@ -4,7 +4,7 @@ Traditional Chinese medicine (TCM) prescription generation with graph AI model
 
 This repository contains the model part of our paper, which includes the graph embedding layer and herb recommendation layer. Among them,  Node2Vec is used to capture the latent features of each herb from the  herb-ingredient-target network.  The Herb Recommendation layer consists of the MLP structure that fit the embedding of each TCM formula to an exact score to assess the quality.
 
-<img src="/Images/model_architecture.jpg" width="1100" height="650"/><br/>
+<img src="/Images/model_architecture.jpg" width="1100" height="550"/><br/>
 
 ## Installation
 The graph model is implemented based on [PYG](https://github.com/pyg-team/pytorch_geometric) , which requires the pytorch version >= 1.12.0. More information about PYG installation can be found [here](https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html). The installation command as follows.
