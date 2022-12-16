@@ -4,8 +4,6 @@ Traditional Chinese medicine (TCM) prescription generation with graph AI model
 
 This repository contains the model part of our paper, which includes the graph embedding layer and herb recommendation layer. Among them,  Node2Vec is used to capture the latent features of each herb from the  herb-ingredient-target network.  The Herb Recommendation layer consists of the MLP structure that fit the embedding of each TCM formula to an exact score to assess the quality.
 
-<img src="/Images/model_architecture.jpg" width="1100" height="550"/><br/>
-
 ## Installation
 The graph model is implemented based on [PYG](https://github.com/pyg-team/pytorch_geometric) , which requires the pytorch version >= 1.12.0. More information about PYG installation can be found [here](https://pytorch-geometric.readthedocs.io/en/latest/notes/installation.html). The installation command as follows.
 
@@ -43,7 +41,7 @@ The training data for the Rocommender is as follows, which is generated based on
 ## Results
 
 We inferred all potential prescriptions for the specific disease with our model.  The top-10 formulas are displayed in the following table, which are selected for the biological experiment.
-
+<!-- 
 |                         TCM Formulas                         | Score  |
 | :----------------------------------------------------------: | :----: |
 | Euphorbiae Humifusae Herba,Scutellariae Radix,Polyporus Umbellatus(Pers)Fr.,Paeoniae Radix Alba | 0.9968 |
@@ -55,7 +53,7 @@ We inferred all potential prescriptions for the specific disease with our model.
 | Bistortae Rhizoma,Euphorbiae Humifusae Herba,Kochiae Fructus,Paeoniae Radix Alba | 0.996  |
 | Euphorbiae Humifusae Herba,Portulacae Herba,Polyporus Umbellatus(Pers)Fr.,Paeoniae Radix Alba | 0.9959 |
 | Fraxini Cortex,Scutellariae Radix,Evodiae Fructus,Paeoniae Radix Alba | 0.9956 |
-|    Fraxini Cortex,Scutellariae Radix,Paeoniae Radix Alba     | 0.9954 |
+|    Fraxini Cortex,Scutellariae Radix,Paeoniae Radix Alba     | 0.9954 | -->
 
 ## Project Support
 
