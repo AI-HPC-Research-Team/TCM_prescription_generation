@@ -40,20 +40,14 @@ The training data for the Rocommender is as follows, which is generated based on
 
 ## Results
 
-We inferred all potential prescriptions for the specific disease with our model.  The top-10 formulas are displayed in the following table, which are selected for the biological experiment.
-<!-- 
+We inferred all potential prescriptions for the specific disease with our model.  The recommended formulas are displayed in the following table, which are selected for the biological experiment.
 |                         TCM Formulas                         | Score  |
 | :----------------------------------------------------------: | :----: |
-| Euphorbiae Humifusae Herba,Scutellariae Radix,Polyporus Umbellatus(Pers)Fr.,Paeoniae Radix Alba | 0.9968 |
-| Hedysarum Multijugum Maxim.,Euphorbiae Humifusae Herba,Polyporus Umbellatus(Pers)Fr.,Paeoniae Radix Alba | 0.9966 |
-| Fraxini Cortex,Mori Follum,Scutellariae Radix,Paeoniae Radix Alba | 0.9966 |
-| Euphorbiae Humifusae Herba,Polyporus Umbellatus(Pers)Fr.,Fructussophorae,Paeoniae Radix Alba | 0.9964 |
-| Fraxini Cortex,Euphorbiae Humifusae Herba,Polyporus Umbellatus(Pers)Fr.,Paeoniae Radix Alba | 0.9962 |
-|        Fraxini Cortex,Mori Follum,Paeoniae Radix Alba        | 0.9961 |
-| Bistortae Rhizoma,Euphorbiae Humifusae Herba,Kochiae Fructus,Paeoniae Radix Alba | 0.996  |
-| Euphorbiae Humifusae Herba,Portulacae Herba,Polyporus Umbellatus(Pers)Fr.,Paeoniae Radix Alba | 0.9959 |
-| Fraxini Cortex,Scutellariae Radix,Evodiae Fructus,Paeoniae Radix Alba | 0.9956 |
-|    Fraxini Cortex,Scutellariae Radix,Paeoniae Radix Alba     | 0.9954 | -->
+| Commelinae Herba,Paeoniae Radix Alba | 0.9683 |
+| Asteris Radix Et Rhizoma,Andrographis Herba | 0.9679 |
+| Atractylodes Macrocephala Koidz.,Paeoniae Radix Alba | 0.966 |
+| Scutellariae Radix,Paeoniae Radix Alba | 0.9592 |
+| Coptidis Rhizoma,Paeoniae Radix Alba | 0.9559 |
 
 ## Project Support
 
